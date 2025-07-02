@@ -376,6 +376,10 @@ io_wait(struct context *c, const unsigned int flags)
             ret |= SOCKET_WRITE;
         }
         c->c2.event_set_status = ret;
+        if (!ret){
+            struct timespec ts = {0, 1 * 1000 * 1000}; // 1 ms
+            nanosleep(&ts, NULL);
+        }
     }
     else
     {
